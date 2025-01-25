@@ -4,25 +4,36 @@ import QUIZ_QUESTIONS from "../questions.js";
 
 function shuffleQuestions(arr) {
   const shuffledQuestions = [...arr];
-    for (let i = shuffledQuestions.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffledQuestions[i], shuffledQuestions[j]] = [shuffledQuestions[j], shuffledQuestions[i]]; // Swap elements
-    }    
-    return shuffledQuestions;
+  for (let i = shuffledQuestions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledQuestions[i], shuffledQuestions[j]] = [
+      shuffledQuestions[j],
+      shuffledQuestions[i],
+    ]; // Swap elements
+  }
+  return shuffledQuestions;
 }
 
 export default function Quiz() {
   const [isReady, setIsReady] = useState(false);
-  const [quizQuestions, setQuizQuestions] = useState(QUIZ_QUESTIONS)
+  const [quizQuestions, setQuizQuestions] = useState(QUIZ_QUESTIONS);
 
   useEffect(() => {
-    setQuizQuestions(shuffleQuestions(QUIZ_QUESTIONS))
-  }, [])
+    setQuizQuestions(shuffleQuestions(QUIZ_QUESTIONS));
+  }, []);
 
   return (
     <div id="quiz">
-      {isReady ? (
+      {/* {isReady ? (
         quizQuestions.map((question) => <Question question={question} key={question.id}/>)
+      ) : (
+        <button onClick={() => setIsReady(true)}>Press when ready...</button>
+      )} */}
+
+          {/* do testow, poki nie mam zaimplementowanej funkcji one-question-at-a-time */}
+
+      {isReady ? (
+          <Question question={quizQuestions[0]} key={quizQuestions[0].id} />
       ) : (
         <button onClick={() => setIsReady(true)}>Press when ready...</button>
       )}

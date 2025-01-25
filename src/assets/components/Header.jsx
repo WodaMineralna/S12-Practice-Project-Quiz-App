@@ -1,5 +1,3 @@
-import React from "react";
-
 import pic from "/quiz-logo.png";
 
 export default function Header() {

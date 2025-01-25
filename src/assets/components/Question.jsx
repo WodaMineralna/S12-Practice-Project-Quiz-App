@@ -21,6 +21,8 @@ export default function Questions({ question }) {
     return () => {
       clearTimeout(timeout);
     };
+
+    // FIX po kliknieciu ponownym, caly ten useEffect sie ponawia - ROZBUDUJ ^^[useReducer], FIX
   }, [submitAnswer]);
 
   function handleSetSelectedAnswer(ans) {

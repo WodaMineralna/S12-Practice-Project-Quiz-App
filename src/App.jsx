@@ -1,5 +1,5 @@
-import Header from "./assets/components/Header";
-import Quiz from "./assets/components/Quiz";
+import Header from "./components/Header";
+import Quiz from "./components/Quiz";
 
 function App() {
   return (

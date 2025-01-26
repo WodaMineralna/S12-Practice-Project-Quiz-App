@@ -1,34 +1,50 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback, useReducer } from "react";
 import ProgressBar from "./ProgressBar";
 
-const TIMER_MS = 10000;
+const TIMER_MS = 5000;
+
+function answerSelectionReducer(state, action) {
+  if (action.type === "SUBMIT") {
+    const selectedAnswers = {...state, answers: [...state.answers, ["TODO-id", state.currentAnswer]]}
+
+    return selectedAnswers;
+  }
+  // TODO w action.type === 'SELECT' dodaj checka sprawdzajacego czy jest to drugie klikniecie na ta sama odp, jezeli tak - 'SUBMIT'
+  if (action.type === "SELECT") {
+    return { ...state, currentAnswer: action.payload };
+  }
+}
 
 export default function Questions({ question }) {
-  const [selectedAnswer, setSelectedAnswer] = useState();
-  // TODO wpierdol tu useReducera() na rozne eventy --> wybranie odpowiedzi / drugi klik na odpowiedz / time run out
-  // FIX click w buttona opoznia console.log('ttt')?? idk why --> wpierw sie konczy interval, a dopiero po chwilce jest 'ttt'
-  
+  const [answerSelectionState, answerSelectionDispatch] = useReducer(
+    answerSelectionReducer,
+    { currentAnswer: "", answers: [] }
+  );
+
   // ? useCallback needed?
   const submitAnswer = useCallback(function submitAnswer() {
-    console.log("ttt");
-  })
-  
+    answerSelectionDispatch({
+      type: "SUBMIT",
+      payload: null,
+    });
+  });
+
   useEffect(() => {
     const timeout = setTimeout(() => {
-      submitAnswer()
+      submitAnswer();
     }, TIMER_MS);
 
     return () => {
       clearTimeout(timeout);
     };
+  }, []);
 
-    // FIX po kliknieciu ponownym, caly ten useEffect sie ponawia - ROZBUDUJ ^^[useReducer], FIX
-  }, [submitAnswer]);
-
-  function handleSetSelectedAnswer(ans) {
-    setSelectedAnswer(ans);
+  function handleSetSelectedAnswer(clickedAnswer) {
+    answerSelectionDispatch({
+      type: "SELECT",
+      payload: clickedAnswer,
+    });
   }
-
 
   return (
     <div id="question">
@@ -44,6 +60,7 @@ export default function Questions({ question }) {
             </button>
           </li>
         ))}
+        <p>{JSON.stringify(answerSelectionState)}</p>
       </ul>
       <ProgressBar timer_ms={TIMER_MS} />
     </div>

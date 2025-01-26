@@ -179,6 +179,12 @@ header h1 {
   color: #2c203d;
 }
 
+.answer button.submitted {
+  /* background: linear-gradient(180deg, #fbda81 0%, #f8b173 100%); */
+  background: #ddf6ae;
+  color: #2c203d;
+}
+
 .answer button.correct {
   /* background: linear-gradient(180deg, #a1fa61 0%, #52d482 100%); */
   background: #5af59d;

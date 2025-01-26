@@ -5,33 +5,37 @@ const TIMER_MS = 5000;
 
 function answerSelectionReducer(state, action) {
   if (action.type === "SUBMIT") {
-    const selectedAnswers = {...state, answers: [...state.answers, ["TODO-id", state.currentAnswer]]}
+    const selectedAnswers = {
+      ...state,
+      answers: [...state.answers, [action.payload, state.currentAnswer]],
+      answerCorrection: 'submitted',
+    };
 
     return selectedAnswers;
   }
   // TODO w action.type === 'SELECT' dodaj checka sprawdzajacego czy jest to drugie klikniecie na ta sama odp, jezeli tak - 'SUBMIT'
   if (action.type === "SELECT") {
-    return { ...state, currentAnswer: action.payload };
+    return { ...state, currentAnswer: action.payload, answerCorrection: 'selected' };
   }
 }
 
 export default function Questions({ question }) {
   const [answerSelectionState, answerSelectionDispatch] = useReducer(
     answerSelectionReducer,
-    { currentAnswer: "", answers: [] }
+    { currentAnswer: "", answers: [], answerCorrection: ''}
   );
 
   // ? useCallback needed?
-  const submitAnswer = useCallback(function submitAnswer() {
+  const submitAnswer = useCallback(function submitAnswer(questionId) {
     answerSelectionDispatch({
       type: "SUBMIT",
-      payload: null,
+      payload: questionId,
     });
   });
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      submitAnswer();
+      submitAnswer(question.id);
     }, TIMER_MS);
 
     return () => {
@@ -53,6 +57,7 @@ export default function Questions({ question }) {
         {question.answers.map((answer) => (
           <li className="answer" key={answer}>
             <button
+              className={answerSelectionState.currentAnswer === answer ? answerSelectionState.answerCorrection : null}
               value={answer}
               onClick={(e) => handleSetSelectedAnswer(e.target.value)}
             >
@@ -60,6 +65,7 @@ export default function Questions({ question }) {
             </button>
           </li>
         ))}
+        {/* testing */}
         <p>{JSON.stringify(answerSelectionState)}</p>
       </ul>
       <ProgressBar timer_ms={TIMER_MS} />

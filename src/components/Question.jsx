@@ -67,6 +67,7 @@ export default function Questions({ question }) {
         ))}
         {/* testing */}
         <p>{JSON.stringify(answerSelectionState)}</p>
+        <p>TEST MEOW MEWO MEWOEWOMOEW</p>
       </ul>
       <ProgressBar timer_ms={TIMER_MS} />
     </div>

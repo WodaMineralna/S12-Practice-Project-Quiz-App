@@ -16,12 +16,10 @@ export default function Quiz() {
         <button onClick={() => setIsReady(true)}>Press when ready...</button>
       )} */}
 
-          {/* do testow, poki nie mam zaimplementowanej funkcji one-question-at-a-time */}
-
       {isReady ? (
           <Question question={QUIZ_QUESTIONS[answersState.questionNumber]} key={QUIZ_QUESTIONS[answersState.questionNumber].id} />
       ) : (
-        <button onClick={() => setIsReady(true)}>Press when ready...</button>
+        <button className="ready" onClick={() => setIsReady(true)}>Press when ready...</button>
       )}
     </div>
   );

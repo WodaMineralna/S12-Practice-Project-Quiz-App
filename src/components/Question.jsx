@@ -5,6 +5,8 @@ import { QuizContext } from "./QuizContextProvider";
 
 const TIMER_MS = 5000;
 
+// TODO jakos z ~20% przed koncem czasu na odpowiedz - zmiana klasy na #last-try ?? aby byly 'emocje' xdd
+
 export default function Questions({ question }) {
   const { submitAnswer, setSelectedAnswer, answersState } =
     useContext(QuizContext);

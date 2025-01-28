@@ -6,7 +6,7 @@ import { QuizContext } from "./QuizContextProvider.jsx";
 
 export default function Quiz() {
   const [isReady, setIsReady] = useState(false);
-  const { answersState } = useContext(QuizContext)
+  const { answersState } = useContext(QuizContext);
 
   return (
     <div id="quiz">
@@ -16,10 +16,19 @@ export default function Quiz() {
         <button onClick={() => setIsReady(true)}>Press when ready...</button>
       )} */}
 
+      {/* FIX / TODO --> jak bede mial quizSummary page to zmienic tego setIsReady(false) */}
+
       {isReady ? (
-          <Question question={QUIZ_QUESTIONS[answersState.questionNumber]} key={QUIZ_QUESTIONS[answersState.questionNumber].id} />
+        answersState.questionNumber < 7 ? (
+          <Question
+            question={QUIZ_QUESTIONS[answersState.questionNumber]}
+            key={QUIZ_QUESTIONS[answersState.questionNumber].id}
+          />
+        ) : setIsReady(false)
       ) : (
-        <button className="ready" onClick={() => setIsReady(true)}>Press when ready...</button>
+        <button className="ready" onClick={() => setIsReady(true)}>
+          Press when ready...
+        </button>
       )}
     </div>
   );

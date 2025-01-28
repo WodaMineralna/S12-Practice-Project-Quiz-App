@@ -1,37 +1,13 @@
-import { useEffect, useCallback, useReducer } from "react";
+import { useEffect, useContext } from "react";
 import ProgressBar from "./ProgressBar";
+
+import { QuizContext } from "./QuizContextProvider";
 
 const TIMER_MS = 5000;
 
-function answerSelectionReducer(state, action) {
-  if (action.type === "SUBMIT") {
-    const selectedAnswers = {
-      ...state,
-      answers: [...state.answers, [action.payload, state.currentAnswer]],
-      answerCorrection: 'submitted',
-    };
-
-    return selectedAnswers;
-  }
-  // TODO w action.type === 'SELECT' dodaj checka sprawdzajacego czy jest to drugie klikniecie na ta sama odp, jezeli tak - 'SUBMIT'
-  if (action.type === "SELECT") {
-    return { ...state, currentAnswer: action.payload, answerCorrection: 'selected' };
-  }
-}
-
 export default function Questions({ question }) {
-  const [answerSelectionState, answerSelectionDispatch] = useReducer(
-    answerSelectionReducer,
-    { currentAnswer: "", answers: [], answerCorrection: ''}
-  );
-
-  // ? useCallback needed?
-  const submitAnswer = useCallback(function submitAnswer(questionId) {
-    answerSelectionDispatch({
-      type: "SUBMIT",
-      payload: questionId,
-    });
-  });
+  const { submitAnswer, setSelectedAnswer, answerState } =
+    useContext(QuizContext);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -43,13 +19,6 @@ export default function Questions({ question }) {
     };
   }, []);
 
-  function handleSetSelectedAnswer(clickedAnswer) {
-    answerSelectionDispatch({
-      type: "SELECT",
-      payload: clickedAnswer,
-    });
-  }
-
   return (
     <div id="question">
       <p id="question-overview">{question.text}</p>
@@ -57,16 +26,20 @@ export default function Questions({ question }) {
         {question.answers.map((answer) => (
           <li className="answer" key={answer}>
             <button
-              className={answerSelectionState.currentAnswer === answer ? answerSelectionState.answerCorrection : null}
+              className={
+                answerState.currentAnswer === answer
+                  ? answerState.answerCorrection
+                  : null
+              }
               value={answer}
-              onClick={(e) => handleSetSelectedAnswer(e.target.value)}
+              onClick={(e) => setSelectedAnswer(e.target.value)}
             >
               {answer}
             </button>
           </li>
         ))}
         {/* testing */}
-        <p>{JSON.stringify(answerSelectionState)}</p>
+        <p>{JSON.stringify(answerState)}</p>
       </ul>
       <ProgressBar timer_ms={TIMER_MS} />
     </div>

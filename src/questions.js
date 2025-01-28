@@ -1,4 +1,4 @@
-export default [
+const questions = [
   {
     id: 'q1',
     text: 'Which of the following definitions best describes React.js?',
@@ -70,3 +70,21 @@ export default [
     ],
   },
 ];
+
+function shuffleQuestions(arr) {
+  const shuffledQuestions = [...arr];
+  for (let i = shuffledQuestions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledQuestions[i], shuffledQuestions[j]] = [
+      shuffledQuestions[j],
+      shuffledQuestions[i],
+    ]; // Swap elements
+  }
+  console.log('QUESTIONS SHUFFLED SUCCESSULLY')
+  
+  return shuffledQuestions;
+}
+
+const QUIZ_QUESTIONS = shuffleQuestions(questions)
+
+export default QUIZ_QUESTIONS

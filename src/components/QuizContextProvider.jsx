@@ -3,7 +3,7 @@ import { createContext, useCallback, useReducer } from "react";
 export const QuizContext = createContext({
   submitAnswer: () => {},
   setSelectedAnswer: () => {},
-  answerState: {},
+  answersState: {},
 });
 
 export default function QuizContextProvider({ children }) {
@@ -11,6 +11,7 @@ export default function QuizContextProvider({ children }) {
     if (action.type === "SUBMIT") {
       const selectedAnswers = {
         ...state,
+        questionNumber: state.questionNumber + 1,
         answers: [...state.answers, [action.payload, state.currentAnswer]],
         answerCorrection: "submitted",
       };
@@ -29,7 +30,7 @@ export default function QuizContextProvider({ children }) {
 
   const [answerSelectionState, answerSelectionDispatch] = useReducer(
     answerSelectionReducer,
-    { currentAnswer: "", answers: [], answerCorrection: "" }
+    { questionNumber: 0, currentAnswer: "", answers: [], answerCorrection: "" }
   );
 
   // ? useCallback needed?
@@ -52,7 +53,7 @@ export default function QuizContextProvider({ children }) {
   const quizStateValue = {
     submitAnswer: handleSubmitAnswer,
     setSelectedAnswer: handleSetSelectedAnswer,
-    answerState: answerSelectionState,
+    answersState: answerSelectionState,
   };
   return (
     <QuizContext.Provider value={quizStateValue}>

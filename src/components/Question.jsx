@@ -6,7 +6,7 @@ import { QuizContext } from "./QuizContextProvider";
 const TIMER_MS = 5000;
 
 export default function Questions({ question }) {
-  const { submitAnswer, setSelectedAnswer, answerState } =
+  const { submitAnswer, setSelectedAnswer, answersState } =
     useContext(QuizContext);
 
   useEffect(() => {
@@ -27,8 +27,8 @@ export default function Questions({ question }) {
           <li className="answer" key={answer}>
             <button
               className={
-                answerState.currentAnswer === answer
-                  ? answerState.answerCorrection
+                answersState.currentAnswer === answer
+                  ? answersState.answerCorrection
                   : null
               }
               value={answer}
@@ -39,7 +39,7 @@ export default function Questions({ question }) {
           </li>
         ))}
         {/* testing */}
-        <p>{JSON.stringify(answerState)}</p>
+        <p>{JSON.stringify(answersState)}</p>
       </ul>
       <ProgressBar timer_ms={TIMER_MS} />
     </div>

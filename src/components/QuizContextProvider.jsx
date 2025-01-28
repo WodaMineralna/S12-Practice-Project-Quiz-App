@@ -1,9 +1,9 @@
 import { createContext, useCallback, useReducer } from "react";
 
 export const QuizContext = createContext({
-  currentAnswer: "",
-  answers: [],
-  answerCorrection: "",
+  submitAnswer: () => {},
+  setSelectedAnswer: () => {},
+  answerState: {},
 });
 
 export default function QuizContextProvider({ children }) {

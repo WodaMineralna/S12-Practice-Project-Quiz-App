@@ -3,6 +3,7 @@ import { createContext, useCallback, useReducer } from "react";
 export const QuizContext = createContext({
   submitAnswer: () => {},
   setSelectedAnswer: () => {},
+  setLastTry: () => {},
   answersState: {},
 });
 
@@ -14,6 +15,7 @@ export default function QuizContextProvider({ children }) {
         questionNumber: state.questionNumber + 1,
         answers: [...state.answers, [action.payload, state.currentAnswer]],
         answerCorrection: "submitted",
+        currentAnswer: '',
       };
 
       return selectedAnswers;
@@ -23,7 +25,14 @@ export default function QuizContextProvider({ children }) {
       return {
         ...state,
         currentAnswer: action.payload,
-        answerCorrection: "selected",
+        answerCorrection: state.answerCorrection === "last-try" ? "last-try" : "selected"
+      };
+    }
+
+    if (action.type === "LAST_TRY") {
+      return {
+        ...state,
+        answerCorrection: "last-try",
       };
     }
   }
@@ -50,9 +59,16 @@ export default function QuizContextProvider({ children }) {
     });
   }
 
+  function handleSetLastTry() {
+    answerSelectionDispatch({
+      type: "LAST_TRY",
+    });
+  }
+
   const quizStateValue = {
     submitAnswer: handleSubmitAnswer,
     setSelectedAnswer: handleSetSelectedAnswer,
+    setLastTry: handleSetLastTry,
     answersState: answerSelectionState,
   };
   return (

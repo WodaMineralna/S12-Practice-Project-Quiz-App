@@ -3,20 +3,23 @@ import ProgressBar from "./ProgressBar";
 
 import { QuizContext } from "./QuizContextProvider";
 
-const TIMER_MS = 5000;
-
-// TODO jakos z ~20% przed koncem czasu na odpowiedz - zmiana klasy na #last-try ?? aby byly 'emocje' xdd
+const TIMER_MS = 15000;
 
 export default function Questions({ question }) {
-  const { submitAnswer, setSelectedAnswer, answersState } =
+  const { submitAnswer, setSelectedAnswer, setLastTry, answersState } =
     useContext(QuizContext);
 
   useEffect(() => {
+    const timeout_lastTry = setTimeout(() => {
+      setLastTry()
+    }, TIMER_MS * 0.33)
+
     const timeout = setTimeout(() => {
       submitAnswer(question.id);
     }, TIMER_MS);
 
     return () => {
+      clearTimeout(timeout_lastTry)
       clearTimeout(timeout);
     };
   }, []);

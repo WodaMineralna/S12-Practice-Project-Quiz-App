@@ -18,12 +18,7 @@ export default function QuizSummary() {
     return question ? question.answer : null
   }
 
-  function deriveAnswerCorrectionClassname(answerCorrection) {
-    return answerCorrection === 'correct' ? 'correct' : 'wrong'
-  }
-
   // TODO 'view-answers' button, tak jak na main page z 'ready-button'
-
   return (
     <>
       <p>{JSON.stringify(answersState)}</p>

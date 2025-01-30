@@ -14,9 +14,7 @@ export default function QuizSummary() {
   }
 
   function deriveAnswerCorrectionClassname(answerCorrection) {
-    // const answerCorrectionClass
-
-    // return answerCorrectionClass
+    return answerCorrection === 'correct' ? 'correct' : 'wrong'
   }
 
   // TODO 'view-answers' button, tak jak na main page z 'ready-button'
@@ -50,7 +48,7 @@ export default function QuizSummary() {
             <li key={index}>
               <h3>{index + 1}</h3>
               <div className="question">{findQuestionFromId(answer[0])}</div>
-              <div className={`user-answer ${() => deriveAnswerCorrectionClassname(answer[2])}`}>{answer[1]}</div>
+              <div className={`user-answer ${(answer[2])}`}>{answer[1]}</div>
             </li>
           ))}
         </ol>

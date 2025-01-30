@@ -290,6 +290,11 @@ header h1 {
   font-weight: normal;
 }
 
+#summary .user-answer.correctedAnswer {
+  margin: 0.5rem 0 0 0;
+  color: #206d54;
+}
+
 #summary-stats {
   display: flex;
   gap: 3rem;

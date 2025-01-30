@@ -1,5 +1,5 @@
 import trophyPic from "../assets/quiz-complete.png";
-import { questions } from "../questions";
+import { questions, correctQuestions } from "../questions";
 
 import { useContext } from "react";
 import { QuizContext } from "./QuizContextProvider";
@@ -11,6 +11,11 @@ export default function QuizSummary() {
   function findQuestionFromId(questionId) {
     const question = questions.find((item) => item.id === questionId);
     return question ? question.text : null;
+  }
+
+  function findCorrectAnswerFromId(questionId) {
+    const question = correctQuestions.find((item) => item.id === questionId);
+    return question ? question.answer : null
   }
 
   function deriveAnswerCorrectionClassname(answerCorrection) {
@@ -49,6 +54,7 @@ export default function QuizSummary() {
               <h3>{index + 1}</h3>
               <div className="question">{findQuestionFromId(answer[0])}</div>
               <div className={`user-answer ${(answer[2])}`}>{answer[1]}</div>
+              {answer[2] === 'wrong' ? <div className="user-answer correctedAnswer">{findCorrectAnswerFromId(answer[0])}</div> : null}
             </li>
           ))}
         </ol>

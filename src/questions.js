@@ -71,6 +71,7 @@ export const questions = [
   },
 ];
 
+// TODO zmien na 'correctAnswers'
 export const correctQuestions = [
   {
     id: "q1",

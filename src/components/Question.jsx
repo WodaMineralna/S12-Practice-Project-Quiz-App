@@ -3,13 +3,16 @@ import ProgressBar from "./ProgressBar";
 
 import { QuizContext } from "./QuizContextProvider";
 
-const TIMER_MS = 15000;
+// DEBUGGING - normalny czas to bedzie z ~10000 - 20000ms
+const TIMER_MS = 1500;
 
-// TODO fix .css zwiazanych z last-try etc
+// TODO dodaj shuffling odpowiedzi
 
 export default function Questions({ question }) {
   const { submitAnswer, setSelectedAnswer, setLastTry, answersState } =
     useContext(QuizContext);
+
+    // TODO dodaj ~2s czasu pomiedzy submitem a nastepnym pytaniem, aby pokazal sie questionCorrection
 
   useEffect(() => {
     const timeout_lastTry = setTimeout(() => {

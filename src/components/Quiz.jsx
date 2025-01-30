@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import Question from "./Question.jsx";
 import QUIZ_QUESTIONS from "../questions.js";
+import QuizSummary from "./QuizSummary.jsx";
 
 import { QuizContext } from "./QuizContextProvider.jsx";
 
@@ -24,7 +25,9 @@ export default function Quiz() {
             question={QUIZ_QUESTIONS[answersState.questionNumber]}
             key={QUIZ_QUESTIONS[answersState.questionNumber].id}
           />
-        ) : setIsReady(false)
+        ) : (
+          <QuizSummary />
+        )
       ) : (
         <button className="ready" onClick={() => setIsReady(true)}>
           Press when ready...

@@ -1,5 +1,7 @@
 import { createContext, useCallback, useReducer } from "react";
 
+import { correctQuestions } from "../questions";
+
 export const QuizContext = createContext({
   submitAnswer: () => {},
   setSelectedAnswer: () => {},
@@ -8,14 +10,32 @@ export const QuizContext = createContext({
 });
 
 export default function QuizContextProvider({ children }) {
+  function checkAnswerCorrection(questionId, usersAnswer) {
+    // ^ get question from correctQuestions based on id
+    const question = correctQuestions.find((item) => item.id === questionId);
+
+    // ^ check if submitted answer matches questionIds answer
+    const answerCorrection =
+      question.answer === usersAnswer ? "correct" : "wrong";
+    return answerCorrection;
+  }
+
   function answerSelectionReducer(state, action) {
     if (action.type === "SUBMIT") {
       const selectedAnswers = {
         ...state,
         questionNumber: state.questionNumber + 1,
-        answers: [...state.answers, [action.payload, state.currentAnswer]],
+        // TODO   przerob answers na object oraz wypierdol .answerCorrection (dodaj do objectu)
+        answers: [
+          ...state.answers,
+          [
+            action.payload, // questionId
+            state.currentAnswer, // currentAnswer
+            checkAnswerCorrection(action.payload, state.currentAnswer), // isAnswerCorrectOrWrong
+          ],
+        ],
         answerCorrection: "submitted",
-        currentAnswer: '',
+        currentAnswer: "",
       };
 
       return selectedAnswers;
@@ -25,7 +45,8 @@ export default function QuizContextProvider({ children }) {
       return {
         ...state,
         currentAnswer: action.payload,
-        answerCorrection: state.answerCorrection === "last-try" ? "last-try" : "selected"
+        answerCorrection:
+          state.answerCorrection === "last-try" ? "last-try" : "selected",
       };
     }
 

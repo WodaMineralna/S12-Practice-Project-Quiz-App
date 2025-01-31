@@ -15,7 +15,7 @@ export default function QuizSummary() {
 
   function findCorrectAnswerFromId(questionId) {
     const question = correctQuestions.find((item) => item.id === questionId);
-    return question ? question.answer : null
+    return question ? question.answer : null;
   }
 
   // TODO 'view-answers' button, tak jak na main page z 'ready-button'
@@ -48,8 +48,16 @@ export default function QuizSummary() {
             <li key={index}>
               <h3>{index + 1}</h3>
               <div className="question">{findQuestionFromId(answer[0])}</div>
-              <div className={`user-answer ${(answer[2])}`}>{answer[1]}</div>
-              {answer[2] === 'wrong' ? <div className="user-answer correctedAnswer">{findCorrectAnswerFromId(answer[0])}</div> : null}
+              <div className={`user-answer ${answer[2]}`}>{answer[1]}</div>
+              {answer[2] === "wrong" ? (
+                <div className="user-answer correctedAnswer">
+                  {findCorrectAnswerFromId(answer[0])}
+                </div>
+              ) : answer[2] === "skipped" ? (
+                <div className="user-answer skipped">
+                  {findCorrectAnswerFromId(answer[0])}
+                </div>
+              ) : null}
             </li>
           ))}
         </ol>

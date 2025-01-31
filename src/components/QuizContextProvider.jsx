@@ -11,6 +11,9 @@ export const QuizContext = createContext({
 
 export default function QuizContextProvider({ children }) {
   function checkAnswerCorrection(questionId, usersAnswer) {
+    // ^ check if user has submitted any answer
+    if(!usersAnswer) return 'skipped'
+
     // ^ get question from correctQuestions based on id
     const question = correctQuestions.find((item) => item.id === questionId);
 
@@ -60,7 +63,7 @@ export default function QuizContextProvider({ children }) {
 
   const [answerSelectionState, answerSelectionDispatch] = useReducer(
     answerSelectionReducer,
-    { questionNumber: 0, currentAnswer: "", answers: [], answerCorrection: "" }
+    { questionNumber: 0, currentAnswer: null, answers: [], answerCorrection: "" }
   );
 
   // ? useCallback needed?

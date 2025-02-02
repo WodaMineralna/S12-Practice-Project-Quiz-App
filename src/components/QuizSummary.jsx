@@ -7,8 +7,7 @@ import { QuizContext } from "./QuizContextProvider";
 export default function QuizSummary() {
   const { answersState } = useContext(QuizContext);
 
-  // * ZMERGUJ TE DWIE FUNKCJE
-
+  // TODO ZMERGUJ TE DWIE FUNKCJE
   // TODO zmien nazwe klasy, so it matches better
   function findQuestionFromId(questionId) {
     const question = questions.find((item) => item.id === questionId);
@@ -31,6 +30,7 @@ export default function QuizSummary() {
     return statPercentage + "%";
   }
 
+  // ? --V czy to jest needed?
   // TODO 'view-answers' button, tak jak na main page z 'ready-button'
   return (
     <>

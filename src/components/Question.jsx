@@ -6,8 +6,6 @@ import { QuizContext } from "./QuizContextProvider";
 // DEBUGGING - normalny czas to bedzie z ~10000 - 20000ms
 const TIMER_MS = 500
 
-// TODO dodaj shuffling odpowiedzi
-
 export default function Questions({ question }) {
   const { submitAnswer, setSelectedAnswer, setLastTry, answersState } =
     useContext(QuizContext);

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 export default function ProgressBar({ timer_ms }) {
   const [remainingTime, setRemainingTime] = useState(timer_ms);
 
+  // !
   // * jak stworze funkcjonalnosc dismountowania componentu to nie bede musial miec tego ifa z timer_ms < 10
   // * oraz bede mogl miec puste dependencies
   useEffect(() => {

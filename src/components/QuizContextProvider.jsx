@@ -28,7 +28,6 @@ export default function QuizContextProvider({ children }) {
       const selectedAnswers = {
         ...state,
         questionNumber: state.questionNumber + 1,
-        // TODO   przerob answers na object oraz wypierdol .answerCorrection (dodaj do objectu)
         answers: [
           ...state.answers,
           [

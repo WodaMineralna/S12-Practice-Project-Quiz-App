@@ -59,14 +59,14 @@ export default function QuizSummary() {
             <li key={index}>
               <h3>{index + 1}</h3>
               <div className="question">{findQuestionFromId(answer[0])}</div>
-              <div className={`user-answer ${answer[2]}`}>{answer[1]}</div>
+              <div className={`user-answer ${answer[2]}`}>{answer?.[1] || 'No answer submitted...'}</div>
               {/* // TODO wpierdol to do oddzielnej funckji */}
               {answer[2] === "wrong" ? (
                 <div className="user-answer correctedAnswer">
                   {findCorrectAnswerFromId(answer[0])}
                 </div>
               ) : answer[2] === "skipped" ? (
-                <div className="user-answer skipped">
+                <div className="user-answer skipped-answer">
                   {findCorrectAnswerFromId(answer[0])}
                 </div>
               ) : null}

@@ -285,10 +285,15 @@ header h1 {
   color: #730b4b !important;
 }
 
-#summary .user-answer.skipped, .text.skipped {
+#summary .user-answer.skipped-answer {
   color: #f6a140ba !important;
   font-weight: normal;
 }
+
+#summary .user-answer.skipped, .text.skipped {
+  color: #ea891bba !important;
+}
+
 
 #summary .user-answer.correctedAnswer {
   margin: 0.5rem 0 0 0;

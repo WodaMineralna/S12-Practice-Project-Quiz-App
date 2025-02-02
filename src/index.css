@@ -277,16 +277,16 @@ header h1 {
   color: #251e2f;
 }
 
-#summary .user-answer.correct {
-  color: #054e37;
+#summary .user-answer.correct, .text.correct {
+  color: #054e37 !important;
 }
 
-#summary .user-answer.wrong {
-  color: #730b4b;
+#summary .user-answer.wrong, .text.wrong {
+  color: #730b4b !important;
 }
 
-#summary .user-answer.skipped {
-  color: #f6a140ba;
+#summary .user-answer.skipped, .text.skipped {
+  color: #f6a140ba !important;
   font-weight: normal;
 }
 

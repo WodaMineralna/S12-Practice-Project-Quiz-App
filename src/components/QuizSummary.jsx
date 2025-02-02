@@ -7,6 +7,8 @@ import { QuizContext } from "./QuizContextProvider";
 export default function QuizSummary() {
   const { answersState } = useContext(QuizContext);
 
+  // * ZMERGUJ TE DWIE FUNKCJE
+
   // TODO zmien nazwe klasy, so it matches better
   function findQuestionFromId(questionId) {
     const question = questions.find((item) => item.id === questionId);
@@ -18,6 +20,17 @@ export default function QuizSummary() {
     return question ? question.answer : null;
   }
 
+
+  // ? doesnt sum up to 100% przez zaokragkenia xdd
+  function calculateStatistics(answerStatus) {
+    const stat = answersState.answers.filter(
+      (el) => el[2] === answerStatus
+    ).length;
+    const statPercentage = Math.floor((100 / 7) * stat);
+
+    return statPercentage + "%";
+  }
+
   // TODO 'view-answers' button, tak jak na main page z 'ready-button'
   return (
     <>
@@ -26,29 +39,28 @@ export default function QuizSummary() {
         <img src={trophyPic} alt="Quiz finish trophy picture" />
         <h2>QUIZ COMPLETED!</h2>
 
-        {/* // TODO summary-stats niech bedzie liczone w jakiejs funkcji, wypluwane potem tutaj */}
         <div id="summary-stats">
           <p>
-            <span className="number">X%</span>
-            <span className="text">SKIPPED</span>
+            <span className="number">{calculateStatistics("skipped")}</span>
+            <span className="text skipped">SKIPPED</span>
           </p>
           <p>
-            <span className="number">X%</span>
-            <span className="text">ANSWERED CORRECTLY</span>
+            <span className="number">{calculateStatistics("correct")}</span>
+            <span className="text correct">ANSWERED CORRECTLY</span>
           </p>
           <p>
-            <span className="number">X%</span>
-            <span className="text">ANSWERED INCORRECTLY</span>
+            <span className="number">{calculateStatistics("wrong")}</span>
+            <span className="text wrong">ANSWERED INCORRECTLY</span>
           </p>
         </div>
 
-        {/* // TODO <ol> z odpowiedziami */}
         <ol>
           {answersState.answers.map((answer, index) => (
             <li key={index}>
               <h3>{index + 1}</h3>
               <div className="question">{findQuestionFromId(answer[0])}</div>
               <div className={`user-answer ${answer[2]}`}>{answer[1]}</div>
+              {/* // TODO wpierdol to do oddzielnej funckji */}
               {answer[2] === "wrong" ? (
                 <div className="user-answer correctedAnswer">
                   {findCorrectAnswerFromId(answer[0])}

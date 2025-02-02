@@ -114,6 +114,23 @@ export const correctQuestions = [
   },
 ];
 
+function shuffleAnswers(arr) {
+  const shuffledAnswers = [...arr];
+
+  shuffledAnswers.map((question) => {
+    for (let i = question.answers.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [question.answers[i], question.answers[j]] = [
+        question.answers[j],
+        question.answers[i],
+      ]; // Swap elements
+    }
+  });
+  console.log("ANSWERS SHUFFLED SUCCESSULLY");
+
+  return shuffledAnswers
+}
+
 function shuffleQuestions(arr) {
   const shuffledQuestions = [...arr];
   for (let i = shuffledQuestions.length - 1; i > 0; i--) {
@@ -125,7 +142,7 @@ function shuffleQuestions(arr) {
   }
   console.log("QUESTIONS SHUFFLED SUCCESSULLY");
 
-  return shuffledQuestions;
+  return shuffleAnswers(shuffledQuestions);
 }
 
 const QUIZ_QUESTIONS = shuffleQuestions(questions);

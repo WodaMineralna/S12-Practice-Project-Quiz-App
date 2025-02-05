@@ -55,7 +55,7 @@ export default function Questions({ question }) {
         {/* testing */}
         <p>{JSON.stringify(answersState)}</p>
       </ul>
-      <ProgressBar key={TIMER_MS} timer_ms={TIMER_MS} />
+      <ProgressBar key={TIMER_MS} timer_ms={TIMER_MS} isLastTry={answersState.answerCorrection === 'last-try'} />
     </div>
   );
 }

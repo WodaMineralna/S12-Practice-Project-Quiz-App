@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const INTERVAL_MS = 10;
 
-export default function ProgressBar({ timer_ms }) {
+export default function ProgressBar({ timer_ms, isLastTry }) {
   const [remainingTime, setRemainingTime] = useState(timer_ms);
 
   useEffect(() => {
@@ -18,5 +18,5 @@ export default function ProgressBar({ timer_ms }) {
     };
   }, [timer_ms]);
 
-  return <progress value={remainingTime} max={timer_ms} />;
+  return <progress className={`${isLastTry ? "last-try" : null}`} value={remainingTime} max={timer_ms} />;
 }

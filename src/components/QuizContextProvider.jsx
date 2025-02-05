@@ -10,7 +10,7 @@ export const QuizContext = createContext({
   answersState: {},
   addTimeout: () => {},
   clearTimeouts: () => {},
-  TIMER_MS: Number,
+  TIMER_MS: null,
 });
 
 export default function QuizContextProvider({ children }) {

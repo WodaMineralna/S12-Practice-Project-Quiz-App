@@ -1,5 +1,6 @@
 import trophyPic from "../assets/quiz-complete.png";
 import QUIZ_QUESTIONS, { correctAnswers } from "../questions";
+import QuizSummaryStatistics from "./QuizSummaryStatistics";
 
 import { useContext } from "react";
 import { QuizContext } from "./QuizContextProvider";
@@ -37,16 +38,6 @@ export default function QuizSummary() {
     );
   }
 
-  // ? doesnt sum up to 100% przez zaokragkenia xdd
-  function calculateStatistics(answerStatus) {
-    const stat = answersState.answers.filter(
-      (el) => el[2] === answerStatus
-    ).length;
-    const statPercentage = Math.floor((100 / 7) * stat);
-
-    return statPercentage + "%";
-  }
-
   return (
     <>
       <p>{JSON.stringify(answersState)}</p>
@@ -54,22 +45,7 @@ export default function QuizSummary() {
         <img src={trophyPic} alt="Quiz finish trophy picture" />
         <h2>QUIZ COMPLETED!</h2>
 
-        {/* // TODO wrzuc to do oddzielnego componentu */}
-        <div id="summary-stats">
-          <p>
-            <span className="number">{calculateStatistics("skipped")}</span>
-            <span className="text skipped">SKIPPED</span>
-          </p>
-          <p>
-            <span className="number">{calculateStatistics("correct")}</span>
-            <span className="text correct">ANSWERED CORRECTLY</span>
-          </p>
-          <p>
-            <span className="number">{calculateStatistics("wrong")}</span>
-            <span className="text wrong">ANSWERED INCORRECTLY</span>
-          </p>
-        </div>
-
+        <QuizSummaryStatistics />
         <ol>
           {answersState.answers.map((answer, index) => (
             // TODO wrzuc to do oddzielnego componentu

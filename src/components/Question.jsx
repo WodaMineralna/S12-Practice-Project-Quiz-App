@@ -7,7 +7,6 @@ import { QuizContext } from "./QuizContextProvider";
 
 export default function Questions({ question }) {
   const {
-    submitAnswer,
     lockSelectedAnswer,
     setSelectedAnswer,
     setLastTry,

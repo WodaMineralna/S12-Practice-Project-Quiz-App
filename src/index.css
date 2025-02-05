@@ -348,7 +348,7 @@ header h1 {
   }
   50% {
     background-color: #7b3aff;
-    opacity: 0.025;
+    opacity: 0.1;
   }
   100% {
     opacity: 1;

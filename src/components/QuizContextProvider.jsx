@@ -12,7 +12,7 @@ export const QuizContext = createContext({
 export default function QuizContextProvider({ children }) {
   function checkAnswerCorrection(questionId, usersAnswer) {
     // ^ check if user has submitted any answer
-    if(!usersAnswer) return 'skipped'
+    if (!usersAnswer) return "skipped";
 
     // ^ get question from correctQuestions based on id
     const question = correctQuestions.find((item) => item.id === questionId);
@@ -25,7 +25,7 @@ export default function QuizContextProvider({ children }) {
 
   function answerSelectionReducer(state, action) {
     if (action.type === "SUBMIT") {
-      const selectedAnswers = {
+      return {
         ...state,
         questionNumber: state.questionNumber + 1,
         answers: [
@@ -39,10 +39,8 @@ export default function QuizContextProvider({ children }) {
         answerCorrection: "submitted",
         currentAnswer: "",
       };
-
-      return selectedAnswers;
     }
-    // TODO w action.type === 'SELECT' dodaj checka sprawdzajacego czy jest to drugie klikniecie na ta sama odp, jezeli tak - 'SUBMIT'
+
     if (action.type === "SELECT") {
       return {
         ...state,
@@ -62,7 +60,12 @@ export default function QuizContextProvider({ children }) {
 
   const [answerSelectionState, answerSelectionDispatch] = useReducer(
     answerSelectionReducer,
-    { questionNumber: 0, currentAnswer: null, answers: [], answerCorrection: "" }
+    {
+      questionNumber: 0,
+      currentAnswer: null,
+      answers: [],
+      answerCorrection: "",
+    }
   );
 
   // ? useCallback needed?
@@ -75,11 +78,19 @@ export default function QuizContextProvider({ children }) {
     });
   });
 
-  function handleSetSelectedAnswer(clickedAnswer) {
-    answerSelectionDispatch({
-      type: "SELECT",
-      payload: clickedAnswer,
-    });
+  function handleSetSelectedAnswer(clickedAnswer, questionId) {
+    // * check if the same answer is clicked again - if so - SUBMIT
+    if (answerSelectionState.currentAnswer === clickedAnswer) {
+      answerSelectionDispatch({
+        type: "SUBMIT",
+        payload: questionId,
+      });
+    } else {
+      answerSelectionDispatch({
+        type: "SELECT",
+        payload: clickedAnswer,
+      });
+    }
   }
 
   function handleSetLastTry() {

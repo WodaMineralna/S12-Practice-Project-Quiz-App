@@ -4,7 +4,7 @@ import ProgressBar from "./ProgressBar";
 import { QuizContext } from "./QuizContextProvider";
 
 // DEBUGGING - normalny czas to bedzie z ~10000 - 20000ms
-const TIMER_MS = 500
+const TIMER_MS = 25500
 
 export default function Questions({ question }) {
   const { submitAnswer, setSelectedAnswer, setLastTry, answersState } =
@@ -40,7 +40,7 @@ export default function Questions({ question }) {
                   : null
               }
               value={answer}
-              onClick={(e) => setSelectedAnswer(e.target.value)}
+              onClick={(e) => setSelectedAnswer(e.target.value, question.id)}
             >
               {answer}
             </button>

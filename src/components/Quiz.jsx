@@ -11,14 +11,6 @@ export default function Quiz() {
 
   return (
     <div id="quiz">
-      {/* {isReady ? (
-        quizQuestions.map((question) => <Question question={question} key={question.id}/>)
-      ) : (
-        <button onClick={() => setIsReady(true)}>Press when ready...</button>
-      )} */}
-
-      {/* FIX / TODO --> jak bede mial quizSummary page to zmienic tego setIsReady(false) */}
-
       {isReady ? (
         answersState.questionNumber < 7 ? (
           <Question

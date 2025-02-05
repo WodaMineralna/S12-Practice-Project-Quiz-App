@@ -3,8 +3,6 @@ import ProgressBar from "./ProgressBar";
 
 import { QuizContext } from "./QuizContextProvider";
 
-// DEBUGGING - normalny czas to bedzie z ~10000 - 20000ms
-
 export default function Questions({ question }) {
   const {
     lockSelectedAnswer,
@@ -52,7 +50,7 @@ export default function Questions({ question }) {
           </li>
         ))}
         {/* testing */}
-        <p>{JSON.stringify(answersState)}</p>
+        {/* <p>{JSON.stringify(answersState)}</p> */}
       </ul>
       <ProgressBar key={TIMER_MS} timer_ms={TIMER_MS} isLastTry={answersState.answerCorrection === 'last-try'} />
     </div>

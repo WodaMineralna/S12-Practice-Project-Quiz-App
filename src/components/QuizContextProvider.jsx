@@ -14,7 +14,7 @@ export const QuizContext = createContext({
 });
 
 export default function QuizContextProvider({ children }) {
-  const STARTING_TIMER = 5000;
+  const STARTING_TIMER = 25000;
   const TIMER_FADEOUT = 2500;
   const [timerMS, setTimerMS] = useState(STARTING_TIMER);
 

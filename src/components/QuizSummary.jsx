@@ -1,5 +1,5 @@
 import trophyPic from "../assets/quiz-complete.png";
-import { questions, correctQuestions } from "../questions";
+import QUIZ_QUESTIONS, { correctAnswers } from "../questions";
 
 import { useContext } from "react";
 import { QuizContext } from "./QuizContextProvider";
@@ -10,12 +10,12 @@ export default function QuizSummary() {
   // TODO ZMERGUJ TE DWIE FUNKCJE
   // TODO zmien nazwe klasy, so it matches better
   function findQuestionFromId(questionId) {
-    const question = questions.find((item) => item.id === questionId);
+    const question = QUIZ_QUESTIONS.find((item) => item.id === questionId);
     return question ? question.text : null;
   }
 
   function findCorrectAnswerFromId(questionId) {
-    const question = correctQuestions.find((item) => item.id === questionId);
+    const question = correctAnswers.find((item) => item.id === questionId);
     return question ? question.answer : null;
   }
 

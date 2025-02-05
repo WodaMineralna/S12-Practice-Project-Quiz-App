@@ -1,4 +1,4 @@
-export const questions = [
+const questions = [
   {
     id: "q1",
     text: "Which of the following definitions best describes React.js?",
@@ -71,46 +71,37 @@ export const questions = [
   },
 ];
 
-// TODO zmien na 'correctAnswers'
-// ? 'text' needed?
-export const correctQuestions = [
+export const correctAnswers = [
   {
     id: "q1",
-    text: "Which of the following definitions best describes React.js?",
     answer: "A library to build user interfaces with help of declarative code.",
   },
   {
     id: "q2",
-    text: "What purpose do React hooks serve?",
     answer:
       "Enabling the use of state and other React features in functional components.",
   },
   {
     id: "q3",
-    text: "Can you identify what JSX is?",
     answer: "A JavaScript extension that adds HTML-like syntax to JavaScript.",
   },
   {
     id: "q4",
-    text: "What is the most common way to create a component in React?",
     answer:
       "By defining a JavaScript function that returns a renderable value.",
   },
   {
     id: "q5",
-    text: 'What does the term "React state" imply?',
     answer:
       "An object in a component that holds values and may cause the component to render on change.",
   },
   {
     id: "q6",
-    text: "How do you typically render list content in React apps?",
     answer:
       "By using the map() method to iterate over an array of data and returning JSX.",
   },
   {
     id: "q7",
-    text: "Which approach can NOT be used to render content conditionally?",
     answer: "Using a the #if template syntax.",
   },
 ];
@@ -129,7 +120,7 @@ function shuffleAnswers(arr) {
   });
   console.log("ANSWERS SHUFFLED SUCCESSULLY");
 
-  return shuffledAnswers
+  return shuffledAnswers;
 }
 
 function shuffleQuestions(arr) {

@@ -4,7 +4,7 @@ import ProgressBar from "./ProgressBar";
 import { QuizContext } from "./QuizContextProvider";
 
 // DEBUGGING - normalny czas to bedzie z ~10000 - 20000ms
-const TIMER_MS = 25500
+const TIMER_MS = 2500
 
 export default function Questions({ question }) {
   const { submitAnswer, setSelectedAnswer, setLastTry, answersState } =

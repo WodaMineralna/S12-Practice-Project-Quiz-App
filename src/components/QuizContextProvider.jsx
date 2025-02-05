@@ -1,6 +1,6 @@
 import { createContext, useCallback, useReducer } from "react";
 
-import { correctQuestions } from "../questions";
+import { correctAnswers } from "../questions";
 
 export const QuizContext = createContext({
   submitAnswer: () => {},
@@ -14,8 +14,8 @@ export default function QuizContextProvider({ children }) {
     // ^ check if user has submitted any answer
     if (!usersAnswer) return "skipped";
 
-    // ^ get question from correctQuestions based on id
-    const question = correctQuestions.find((item) => item.id === questionId);
+    // ^ get question from correctAnswers based on id
+    const question = correctAnswers.find((item) => item.id === questionId);
 
     // ^ check if submitted answer matches questionIds answer
     const answerCorrection =

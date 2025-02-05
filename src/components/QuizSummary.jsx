@@ -7,18 +7,35 @@ import { QuizContext } from "./QuizContextProvider";
 export default function QuizSummary() {
   const { answersState } = useContext(QuizContext);
 
-  // TODO ZMERGUJ TE DWIE FUNKCJE
-  // TODO zmien nazwe klasy, so it matches better
-  function findQuestionFromId(questionId) {
-    const question = QUIZ_QUESTIONS.find((item) => item.id === questionId);
-    return question ? question.text : null;
-  }
+  function findElementFromId(questionId, elementToLookFor, answerCorrection) {
+    let arrayToLookFor = "";
+    let keyToLookFor = "";
+    let styles = "";
 
-  function findCorrectAnswerFromId(questionId) {
-    const question = correctAnswers.find((item) => item.id === questionId);
-    return question ? question.answer : null;
-  }
+    if (elementToLookFor === "correctAnswer") {
+      if (answerCorrection === "correct") return;
 
+      arrayToLookFor = correctAnswers;
+      keyToLookFor = "answer";
+
+      if (answerCorrection === "wrong") {
+        styles = "user-answer correctedAnswer";
+      } else if (answerCorrection === "skipped") {
+        styles = "user-answer skippedAnswer";
+      }
+    }
+
+    if (elementToLookFor === "questionText") {
+      arrayToLookFor = QUIZ_QUESTIONS;
+      keyToLookFor = "text";
+      styles = "question";
+    }
+
+    const question = arrayToLookFor.find((item) => item.id === questionId);
+    return (
+      <div className={styles}>{question ? question[keyToLookFor] : null}</div>
+    );
+  }
 
   // ? doesnt sum up to 100% przez zaokragkenia xdd
   function calculateStatistics(answerStatus) {
@@ -30,8 +47,6 @@ export default function QuizSummary() {
     return statPercentage + "%";
   }
 
-  // ? --V czy to jest needed?
-  // TODO 'view-answers' button, tak jak na main page z 'ready-button'
   return (
     <>
       <p>{JSON.stringify(answersState)}</p>
@@ -39,6 +54,7 @@ export default function QuizSummary() {
         <img src={trophyPic} alt="Quiz finish trophy picture" />
         <h2>QUIZ COMPLETED!</h2>
 
+        {/* // TODO wrzuc to do oddzielnego componentu */}
         <div id="summary-stats">
           <p>
             <span className="number">{calculateStatistics("skipped")}</span>
@@ -56,20 +72,14 @@ export default function QuizSummary() {
 
         <ol>
           {answersState.answers.map((answer, index) => (
+            // TODO wrzuc to do oddzielnego componentu
             <li key={index}>
               <h3>{index + 1}</h3>
-              <div className="question">{findQuestionFromId(answer[0])}</div>
-              <div className={`user-answer ${answer[2]}`}>{answer?.[1] || 'No answer submitted...'}</div>
-              {/* // TODO wpierdol to do oddzielnej funckji */}
-              {answer[2] === "wrong" ? (
-                <div className="user-answer correctedAnswer">
-                  {findCorrectAnswerFromId(answer[0])}
-                </div>
-              ) : answer[2] === "skipped" ? (
-                <div className="user-answer skipped-answer">
-                  {findCorrectAnswerFromId(answer[0])}
-                </div>
-              ) : null}
+              {findElementFromId(answer[0], "questionText")}
+              <div className={`user-answer ${answer[2]}`}>
+                {answer?.[1] || "No answer submitted..."}
+              </div>
+              {findElementFromId(answer[0], "correctAnswer", answer[2])}
             </li>
           ))}
         </ol>

@@ -285,7 +285,7 @@ header h1 {
   color: #730b4b !important;
 }
 
-#summary .user-answer.skipped-answer {
+#summary .user-answer.skippedAnswer {
   color: #f6a140ba !important;
   font-weight: normal;
 }

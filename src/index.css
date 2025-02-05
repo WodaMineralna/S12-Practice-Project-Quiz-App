@@ -178,14 +178,16 @@ header h1 {
 
 .answer button.correct {
   /* background: linear-gradient(180deg, #a1fa61 0%, #52d482 100%); */
-  background: #5af59d;
-  color: #2c203d;
+  background: #047937;
+  color: #e2dfe8;
+  font-weight: bold;
 }
 
 .answer button.wrong {
   /* background: linear-gradient(180deg, #f96fb1 0%, #f52b8c 100%); */
-  background: #f55a98;
-  color: #2c203d;
+  background: #b8044c;
+  color: #c7bfd6;
+  font-weight: bold;
 }
 
 #skip-action {

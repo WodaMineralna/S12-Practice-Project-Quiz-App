@@ -1,15 +1,34 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useState, useRef } from "react";
 
 import { correctAnswers } from "../questions";
 
 export const QuizContext = createContext({
   submitAnswer: () => {},
+  setLockSelectedAnswer: () => {},
   setSelectedAnswer: () => {},
   setLastTry: () => {},
   answersState: {},
+  addTimeout: () => {},
+  clearTimeouts: () => {},
+  TIMER_MS: Number,
 });
 
 export default function QuizContextProvider({ children }) {
+  const STARTING_TIMER = 5000;
+  const TIMER_FADEOUT = 2500;
+  const [timerMS, setTimerMS] = useState(STARTING_TIMER);
+
+  const timeouts = useRef([]);
+
+  function handleAddTimeout(timeoutId) {
+    timeouts.current.push(timeoutId);
+  }
+
+  function handleClearTimeouts() {
+    timeouts.current.forEach(clearTimeout);
+    timeouts.current = [];
+  }
+
   function checkAnswerCorrection(questionId, usersAnswer) {
     // ^ check if user has submitted any answer
     if (!usersAnswer) return "skipped";
@@ -33,11 +52,21 @@ export default function QuizContextProvider({ children }) {
           [
             action.payload, // questionId
             state.currentAnswer, // currentAnswer
-            checkAnswerCorrection(action.payload, state.currentAnswer), // isAnswerCorrectOrWrong
+            state.answerCorrection, // isAnswerCorrectOrWrong
           ],
         ],
         answerCorrection: "submitted",
         currentAnswer: "",
+      };
+    }
+
+    if (action.type === "LOCK-ANSWER") {
+      return {
+        ...state,
+        answerCorrection: checkAnswerCorrection(
+          action.payload,
+          state.currentAnswer
+        ),
       };
     }
 
@@ -69,19 +98,39 @@ export default function QuizContextProvider({ children }) {
   );
 
   function handleSubmitAnswer(questionId) {
+    handleClearTimeouts();
+    setTimerMS(STARTING_TIMER);
+
     answerSelectionDispatch({
       type: "SUBMIT",
       payload: questionId,
     });
   }
 
+  function handleLockSelectedAnswer(questionId) {
+    setTimerMS(TIMER_FADEOUT);
+
+    answerSelectionDispatch({
+      type: "LOCK-ANSWER",
+      payload: questionId,
+    });
+
+    setTimeout(() => handleSubmitAnswer(questionId), TIMER_FADEOUT);
+  }
+
   function handleSetSelectedAnswer(clickedAnswer, questionId) {
-    // ^ check if the same answer is clicked again - if so - SUBMIT
+    // ^ checks if answer has already been submitted / skipped - if so -> return, don't proceed
+    if (
+      ["wrong", "correct", "skipped"].includes(
+        answerSelectionState.answerCorrection
+      )
+    )
+      return;
+
+    // ^ check if the same answer is clicked again - if so -> SUBMIT
     if (answerSelectionState.currentAnswer === clickedAnswer) {
-      answerSelectionDispatch({
-        type: "SUBMIT",
-        payload: questionId,
-      });
+      handleClearTimeouts();
+      handleLockSelectedAnswer(questionId);
     } else {
       answerSelectionDispatch({
         type: "SELECT",
@@ -98,9 +147,13 @@ export default function QuizContextProvider({ children }) {
 
   const quizStateValue = {
     submitAnswer: handleSubmitAnswer,
+    lockSelectedAnswer: handleLockSelectedAnswer,
     setSelectedAnswer: handleSetSelectedAnswer,
     setLastTry: handleSetLastTry,
     answersState: answerSelectionState,
+    addTimeout: handleAddTimeout,
+    clearTimeouts: handleClearTimeouts,
+    TIMER_MS: timerMS,
   };
   return (
     <QuizContext.Provider value={quizStateValue}>

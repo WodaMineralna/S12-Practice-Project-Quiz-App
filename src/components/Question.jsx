@@ -4,27 +4,33 @@ import ProgressBar from "./ProgressBar";
 import { QuizContext } from "./QuizContextProvider";
 
 // DEBUGGING - normalny czas to bedzie z ~10000 - 20000ms
-const TIMER_MS = 2500
 
 export default function Questions({ question }) {
-  const { submitAnswer, setSelectedAnswer, setLastTry, answersState } =
-    useContext(QuizContext);
-
-    // TODO dodaj ~2s czasu pomiedzy submitem a nastepnym pytaniem, aby pokazal sie questionCorrection
+  const {
+    submitAnswer,
+    lockSelectedAnswer,
+    setSelectedAnswer,
+    setLastTry,
+    answersState,
+    addTimeout,
+    clearTimeouts,
+    TIMER_MS,
+  } = useContext(QuizContext);
 
   useEffect(() => {
-    const timeout_lastTry = setTimeout(() => {
-      setLastTry()
-    }, TIMER_MS * 0.66)
+    addTimeout(
+      setTimeout(() => {
+        setLastTry();
+      }, TIMER_MS * 0.66)
+    );
 
-    const timeout = setTimeout(() => {
-      submitAnswer(question.id);
-    }, TIMER_MS);
+    addTimeout(
+      setTimeout(() => {
+        lockSelectedAnswer(question.id);
+      }, TIMER_MS)
+    );
 
-    return () => {
-      clearTimeout(timeout_lastTry)
-      clearTimeout(timeout);
-    };
+    return clearTimeouts;
   }, []);
 
   return (
@@ -49,7 +55,7 @@ export default function Questions({ question }) {
         {/* testing */}
         <p>{JSON.stringify(answersState)}</p>
       </ul>
-      <ProgressBar timer_ms={TIMER_MS} />
+      <ProgressBar key={TIMER_MS} timer_ms={TIMER_MS} />
     </div>
   );
 }

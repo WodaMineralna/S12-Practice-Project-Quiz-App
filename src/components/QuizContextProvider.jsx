@@ -1,4 +1,4 @@
-import { createContext, useCallback, useReducer } from "react";
+import { createContext, useReducer } from "react";
 
 import { correctAnswers } from "../questions";
 
@@ -68,15 +68,12 @@ export default function QuizContextProvider({ children }) {
     }
   );
 
-  // ? useCallback needed?
-  const handleSubmitAnswer = useCallback(function handleSubmitAnswer(
-    questionId
-  ) {
+  function handleSubmitAnswer(questionId) {
     answerSelectionDispatch({
       type: "SUBMIT",
       payload: questionId,
     });
-  });
+  }
 
   function handleSetSelectedAnswer(clickedAnswer, questionId) {
     // * check if the same answer is clicked again - if so - SUBMIT

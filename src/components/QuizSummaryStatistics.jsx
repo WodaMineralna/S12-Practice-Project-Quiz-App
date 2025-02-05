@@ -4,14 +4,21 @@ import { QuizContext } from "./QuizContextProvider";
 export default function QuizSummaryStatistics() {
   const { answersState } = useContext(QuizContext);
 
-  // ? doesnt sum up to 100% przez zaokragkenia xdd
+  let statPercentageRoundingCompensation = 100;
   function calculateStatistics(answerStatus) {
     const stat = answersState.answers.filter(
       (el) => el[2] === answerStatus
     ).length;
-    const statPercentage = Math.floor((100 / 7) * stat);
 
-    return statPercentage + "%";
+    const statPercentage = Math.floor((100 / 7) * stat);
+    statPercentageRoundingCompensation -= statPercentage;
+
+    if (
+      statPercentageRoundingCompensation < 5 &&
+      statPercentageRoundingCompensation > 0
+    )
+      return statPercentage + statPercentageRoundingCompensation + "%";
+    else return statPercentage + "%";
   }
 
   return (

@@ -76,7 +76,7 @@ export default function QuizContextProvider({ children }) {
   }
 
   function handleSetSelectedAnswer(clickedAnswer, questionId) {
-    // * check if the same answer is clicked again - if so - SUBMIT
+    // ^ check if the same answer is clicked again - if so - SUBMIT
     if (answerSelectionState.currentAnswer === clickedAnswer) {
       answerSelectionDispatch({
         type: "SUBMIT",

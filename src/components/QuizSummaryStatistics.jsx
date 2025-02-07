@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import { QuizContext } from "./QuizContextProvider";
 
+let statPercentageRoundingCompensation = 100;
+
 export default function QuizSummaryStatistics() {
   const { answersState } = useContext(QuizContext);
 
-  let statPercentageRoundingCompensation = 100;
   function calculateStatistics(answerStatus) {
     const stat = answersState.answers.filter(
       (el) => el[2] === answerStatus
@@ -13,10 +14,7 @@ export default function QuizSummaryStatistics() {
     const statPercentage = Math.floor((100 / 7) * stat);
     statPercentageRoundingCompensation -= statPercentage;
 
-    if (
-      statPercentageRoundingCompensation < 5 &&
-      statPercentageRoundingCompensation > 0
-    )
+    if (statPercentageRoundingCompensation <= 3 && stat !== 0)
       return statPercentage + statPercentageRoundingCompensation + "%";
     else return statPercentage + "%";
   }

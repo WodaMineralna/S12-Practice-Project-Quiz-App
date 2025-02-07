@@ -282,7 +282,7 @@ header h1 {
 
 #summary .user-answer.skipped,
 .text.skipped {
-  color: #d57302ba !important;
+  color: #f0b775ba !important;
 }
 
 #summary .user-answer.correctedAnswer {

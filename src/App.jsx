@@ -4,10 +4,12 @@ import QuizContextProvider from "./components/QuizContextProvider";
 
 function App() {
   return (
-    <QuizContextProvider>
+    <>
       <Header />
-      <Quiz />
-    </QuizContextProvider>
+      <QuizContextProvider>
+        <Quiz />
+      </QuizContextProvider>
+    </>
   );
 }
 

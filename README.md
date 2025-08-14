@@ -2,7 +2,7 @@
 
 Practice code for Section 12 - Practice Project - Building a Quiz App, part of the course "React - The Complete Guide (incl. Redux)" by Maximilian Schwarzmüller.
 
-This project covers
+This project covers:
 - Quiz app state machine with useContext
 - Question flow, scoring and result screen
   

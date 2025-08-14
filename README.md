@@ -5,14 +5,15 @@ Practice code for Section 12 - Practice Project - Building a Quiz App, part of t
 This project covers
 - Quiz app state machine with useContext
 - Question flow, scoring and result screen
-Project type
-- Built from scratch
+  
+# Project type
+**Built from scratch**
 
 ## Tech Stack
 - React
 - JavaScript (ES6+)
 - Build tool - Vite
-- useReducer
+- useContext API
 ## How to Run
 
 ```bash

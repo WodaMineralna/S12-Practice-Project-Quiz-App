@@ -7,7 +7,7 @@ This project covers
 - Question flow, scoring and result screen
   
 # Project type
-**Built from scratch**
+Planned, designed, and developed entirely by me as part of a course challenge.
 
 ## Tech Stack
 - React
